@@ -19,8 +19,8 @@
 
 - [ Rust 核心模組 HackMD Linux 核心專題: 撰寫 LKMPG 的 Rust 核心模組](https://hackmd.io/@sysprog/Sk8IMQ9S2#Linux-%E6%A0%B8%E5%BF%83%E5%B0%88%E9%A1%8C-%E6%92%B0%E5%AF%AB-LKMPG-%E7%9A%84-Rust-%E6%A0%B8%E5%BF%83%E6%A8%A1%E7%B5%84)
 
-- []()
+- [thermostat-pi]https://github.com/mikehentges/thermostat-pi?ref=hackernoon.com()
 
-- []()
+- [How to Develop a Minimal OS for Raspberry Pi 3 in Rust](https://www.apriorit.com/dev-blog/696-kernel-embedded-development-for-raspberry-pi)
 
-- []()
+- [Rust Cross Compiling to the Raspberry Pi](https://hackernoon.com/building-a-wireless-thermostat-in-rust-for-raspberry-pi-part-2)
