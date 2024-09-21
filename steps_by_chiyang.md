@@ -20,3 +20,8 @@ rustc --version
 rustup toolchain uninstall stable && rustup toolchain install stable
 
 cargo install cargo-binutils rustfilt
+
+
+rustup target add thumbv6m-none-eabi
+
+cargo build --release --target thumbv6m-none-eabi
