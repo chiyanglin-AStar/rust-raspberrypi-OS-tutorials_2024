@@ -8,10 +8,11 @@ edition = "2021"
 lto = true
 
 [features]
-default = []
+#default = []
 bsp_rpi3 = []
 bsp_rpi4 = []
-
+# Workaround for lvgl-rs with no_std
+default = ["embedded_graphics"]
 [[bin]]
 name = "kernel"
 path = "src/main.rs"

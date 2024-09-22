@@ -1,29 +1,48 @@
-[target.'cfg(all(target_arch = "arm", target_os = "none"))']
-# Choose a default "cargo run" tool:
-# - probe-run provides flashing and defmt via a hardware debugger
-# - cargo embed offers flashing, rtt, defmt and a gdb server via a hardware debugger
-#     it is configured via the Embed.toml in the root of this project
-# - elf2uf2-rs loads firmware over USB when the rp2040 is in boot mode
-runner = "probe-run --chip RP2040"
-# runner = "cargo embed"
-# runner = "elf2uf2-rs -d"
+# Rename this file to config.toml and adapt it to your needs
 
-rustflags = [
-  "-C", "linker=flip-link",
-  "-C", "link-arg=--nmagic",
-  "-C", "link-arg=-Tlink.x",
-  "-C", "link-arg=-Tdefmt.x",
+[target.armv7-unknown-linux-gnueabihf]
+# Cross-compiling an application for the Raspberry Pi requires a toolchain for the linker.
+# Make sure to add the cross-compiler binary path to your system path and then
+# set the "*-gcc" binary as the linker
 
-  # Code-size optimizations.
-  #   trap unreachable can save a lot of space, but requires nightly compiler.
-  #   uncomment the next line if you wish to enable it
-  # "-Z", "trap-unreachable=no",
-  "-C", "inline-threshold=5",
-  "-C", "no-vectorize-loops",
-]
+# You can download a cross-compiler built with crosstool-ng from here for Unix systems:
+# https://www.dropbox.com/sh/hkn4lw87zr002fh/AAAO-HxFQzfmmPQQ9KVmoooGa?dl=0
+
+# For Windows, it is recommended to get the the toolchain from SysProgs:
+# https://gnutoolchains.com/raspberry/
+
+# If you use a different cross-compiler, adapt this flag accordingly.
+# linker = "armv8-rpi4-linux-gnueabihf-gcc"
+linker = "arm-linux-gnueabihf-gcc"
+# linker = "arm-none-linux-gnueabihf-gcc"
+
+################################################################################
+# Runners
+################################################################################
+
+
+# Requires Python3 installation. Takes care of transferring and running the application
+# to the Raspberry Pi
+# runner = "py bld-deploy-remote.py -t -r --source"
+runner = "python3 bld-deploy-remote.py -t -r --source"
+
+# Debug configurations
+
+# '-d' will start a gdbserver session on port 2331 of the remote machine,
+# '-s' will start the GDB application locally as well.
+# This requires a gdbserver installation on the remote machine and a GDB application
+# installation on the local machine
+
+# Only start server. Use cargo run to start the gdbserver, and then launch
+# a GDB application or VS Code with the CodeLLDB plugin to debug your application.
+# runner = "py bld-deploy-remote.py -t -d --source"
+# runner = "python3 bld-deploy-remote.py -t -d --source"
+# Start GDB application in command line as well
+# runner = "py bld-deploy-remote.py -t -d -s --gdb arm-linux-gnueabihf-gdb --source"
+# runner = "python3 bld-deploy-remote.py -t -d -s --source"
 
 [build]
-target = "thumbv6m-none-eabi"
-
-[env]
-DEFMT_LOG = "debug"
+# Raspberry Pi 0/1
+# target = "arm-unknown-linux-gnueabihf"
+# Raspberry Pi 2/3/4
+target = "armv7-unknown-linux-gnueabihf"
